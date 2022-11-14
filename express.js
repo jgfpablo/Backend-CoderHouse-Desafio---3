@@ -1,23 +1,27 @@
+let Contenedor = require("./products.js");
+
 let express = require("express");
 
-const PORT = process.env.PORT || 3000;
+let contenedor = new Contenedor();
+
+const PORT = process.env.PORT || 8080;
 
 let app = express();
 
 app.all("/", (req, res, next) => {
-    res.send(`Estoy en el metodo all de express`);
+    res.send(`Desafio 3 Backend CoderHouse`);
 });
 
-app.get("/", (req, res, next) => {
-    res.send("hola con expressss");
+app.get("/productos", async (req, res, next) => {
+    const productos = await contenedor.getAll();
+
+    res.json(productos);
 });
 
-app.post("/", (req, res, next) => {
-    res.send(`Estoy en el metodo ${req.method}`);
-});
+app.get("/productoRandom", async (req, res, next) => {
+    const productos = await contenedor.getRandom();
 
-app.get("/estudiantes", (req, res, next) => {
-    res.send("Estoy en estudiantes");
+    res.json(productos);
 });
 
 app.listen(PORT, () => console.log(`server on http://localhost:${PORT}`));
